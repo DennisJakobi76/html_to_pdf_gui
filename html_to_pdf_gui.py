@@ -51,7 +51,6 @@ class HtmlToPdfTool(QWidget):
         super().__init__()
         self.setWindowTitle("HTML → PDF Tool (WeasyPrint)")
 
-        # Drop-Flächen
         self.html_drop = DropArea(filetypes=[".html", ".htm"])
         self.html_drop.label.setText("HTML-Datei hier ablegen")
 
@@ -61,7 +60,6 @@ class HtmlToPdfTool(QWidget):
         self.assets_drop = DropArea(folder=True)
         self.assets_drop.label.setText("Assets-Ordner hier ablegen (optional)")
 
-        # Auswahl-Buttons
         self.html_btn = QPushButton("HTML auswählen")
         self.html_btn.clicked.connect(self.choose_html)
 
@@ -71,7 +69,6 @@ class HtmlToPdfTool(QWidget):
         self.assets_btn = QPushButton("Assets-Ordner auswählen")
         self.assets_btn.clicked.connect(self.choose_assets)
 
-        # Aktionen
         self.convert_btn = QPushButton("📄 PDF erstellen")
         self.convert_btn.setStyleSheet(
             "background:#4CAF50;color:white;font-weight:bold;padding:8px;")
@@ -82,34 +79,27 @@ class HtmlToPdfTool(QWidget):
             "background:#f44336;color:white;font-weight:bold;padding:8px;")
         self.reset_btn.clicked.connect(self.reset_form)
 
-        # Status
         self.status_label = QLabel("Bereit")
         self.status_label.setStyleSheet("color: gray;")
 
-        # Layout
         layout = QVBoxLayout(self)
 
-        # HTML Auswahl
         layout.addWidget(QLabel("HTML-Datei:"))
         layout.addWidget(self.html_drop)
         layout.addWidget(self.html_btn)
 
-        # CSS Auswahl
         layout.addWidget(QLabel("CSS-Datei (optional):"))
         layout.addWidget(self.css_drop)
         layout.addWidget(self.css_btn)
 
-        # Assets Auswahl
         layout.addWidget(QLabel("Assets-Ordner (optional):"))
         layout.addWidget(self.assets_drop)
         layout.addWidget(self.assets_btn)
 
-        # Buttons
         layout.addWidget(self.convert_btn)
         layout.addWidget(self.reset_btn)
         layout.addWidget(self.status_label)
 
-    # === Auswahl-Dialoge ===
     def choose_html(self):
         path, _ = QFileDialog.getOpenFileName(
             self, "HTML-Datei auswählen", "", "HTML Dateien (*.html *.htm)")
@@ -131,7 +121,6 @@ class HtmlToPdfTool(QWidget):
             self.assets_drop.path = folder
             self.assets_drop.label.setText(folder)
 
-    # === PDF-Erstellung ===
     def create_pdf(self):
         html_file = self.html_drop.path
         css_file = self.css_drop.path
@@ -163,7 +152,6 @@ class HtmlToPdfTool(QWidget):
         except Exception as e:
             self.status_label.setText(f"❌ Fehler: {e}")
 
-    # === Reset ===
     def reset_form(self):
         self.html_drop.path = ""
         self.html_drop.label.setText("HTML-Datei hier ablegen")
